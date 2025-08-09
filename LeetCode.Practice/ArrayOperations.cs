@@ -38,34 +38,36 @@
 
         public static void Merge2(int[] nums1, int m, int[] nums2, int n)
         {
-            if(nums1.Length != m + n)
+            if (nums1.Length != m + n)
             {
                 throw new Exception("nums1.Length should equal m + n");
             }
 
-            var list = new List<int>();
+            //var list = new List<int>();
 
+            int[] list = new int[nums1.Length];
+            int i = 0;
             int j = 0;
-            for (int i = 0; i < m && j < n; i++, j++)
-            {
-                if (i > nums1.Length - 1)
-                {
-                    break;
-                }
 
-                if (nums1[i] <= nums2[j])
+            if (m == n)
+            {
+                for (; i < n; i++, j++)
                 {
-                    list.Add(nums1[i]);
-                    list.Add(nums2[j]);
-                }
-                else
-                {
-                    list.Add(nums2[j]);
-                    list.Add(nums1[i]);
+                    if (nums1[i] <= nums2[i])
+                    {
+                        InsertIntoArray(list, j, nums1[i]);
+                        InsertIntoArray(list, j + 1, nums2[i]);
+                    }
+                    else
+                    {
+                        InsertIntoArray(list, j, nums2[i]);
+                        InsertIntoArray(list, j + 1, nums1[i]);
+                    }
+                    j++;
                 }
             }
 
-            nums1 = list.ToArray();
+            nums1 = list;
         }
 
         public static void Merge(int[] nums1, int m, int[] nums2, int n)
@@ -89,7 +91,7 @@
                     i++;
                 }
 
-                for(int i = 0; i < n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     nums1[m + i] = nums2[i];
                 }
@@ -171,10 +173,10 @@
         {
             var newArray = array;
 
-            for (int j = 0; j < index; j++)
-            {
-                array[j] = newArray[j];
-            }
+            //for (int j = 0; j < index; j++)
+            //{
+            //    array[j] = newArray[j];
+            //}
 
             for (int i = newArray.Length - 1; i >= index; i--)
             {
