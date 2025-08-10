@@ -86,7 +86,7 @@ namespace LeetCode.Practice.Tests
             int[] nums2 = [2, 5, 6];
             int n = 3;
 
-            ArrayOperations.Merge2(nums1, m, nums2, n);
+            ArrayOperations.Merge(nums1, m, nums2, n);
 
             Assert.Equal([1, 2, 2, 3, 5, 6], nums1);
         }
@@ -94,14 +94,25 @@ namespace LeetCode.Practice.Tests
         [Fact]
         public void Test7()
         {
-            int[] nums1 = [1, 2, 3, 0, 0, 0];
+            int[] nums1 = [3, 6, 11, 0, 0, 0, 0];
             int m = 3;
-            int[] nums2 = [2, 5, 6];
-            int n = 3;
+            int[] nums2 = [5, 8, 14, 21];
+            int n = 4;
 
-            ArrayOperations.Merge2(nums1, m, nums2, n);
+            ArrayOperations.Merge(nums1, m, nums2, n);
 
-            Assert.Equal(nums1, [1, 2, 2, 3, 5, 6]);
+            Assert.Equal(nums1, [3, 5, 6, 8, 11, 14, 21]);
+        }
+
+        [Fact]
+        public void Test8()
+        {
+            int[] nums1 = [3, 6, 11, 7, 14, 7, 1];
+            
+            var result = ArrayOperations.RemoveElement(nums1, 7);
+
+            Assert.Equal([3, 6, 11, 14, 1, 1, 1], nums1);
+            Assert.Equal(5, result);
         }
     }
 }

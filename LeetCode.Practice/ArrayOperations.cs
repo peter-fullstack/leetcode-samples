@@ -36,91 +36,36 @@
         the merge result can fit in nums1.
         */
 
-        public static void Merge2(int[] nums1, int m, int[] nums2, int n)
+        public static void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             if (nums1.Length != m + n)
             {
                 throw new Exception("nums1.Length should equal m + n");
             }
 
-            //var list = new List<int>();
-
-            int[] list = new int[nums1.Length];
-            int i = 0;
-            int j = 0;
-
-            if (m == n)
+            for(int i = m;i < nums1.Length; i++)
             {
-                for (; i < n; i++, j++)
+                nums1[i] = 1_000_000;
+            }
+           
+            for(int j = 0; j < nums2.Length; j++)
+            {
+                var current = nums2[j];
+
+                // where in nums1 does current sit find 
+
+                for (int i =  0; i < nums1.Length; i++)
                 {
-                    if (nums1[i] <= nums2[i])
+                    if(current < nums1[i])
                     {
-                        InsertIntoArray(list, j, nums1[i]);
-                        InsertIntoArray(list, j + 1, nums2[i]);
+                        InsertIntoArray(nums1, i, current);
+                        break;
                     }
-                    else
-                    {
-                        InsertIntoArray(list, j, nums2[i]);
-                        InsertIntoArray(list, j + 1, nums1[i]);
-                    }
-                    j++;
                 }
             }
 
-            nums1 = list;
         }
-
-        public static void Merge(int[] nums1, int m, int[] nums2, int n)
-        {
-            if (m < n)
-            {
-                int j = 0;
-                for (int i = 0; i < m; i++)
-                {
-                    if (nums1[i] > nums2[j])
-                    {
-                        InsertIntoArray(nums1, i, nums2[j]);
-                        InsertIntoArray(nums1, i + 1, nums1[i]);
-                    }
-                    else
-                    {
-                        InsertIntoArray(nums1, i, nums1[i]);
-                        InsertIntoArray(nums1, i + 1, nums2[j]);
-                    }
-                    j++;
-                    i++;
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    nums1[m + i] = nums2[i];
-                }
-            }
-            else
-            {
-                int j = 0;
-                for (int i = 0; i < n; i++)
-                {
-                    if (nums1[i] > nums2[j])
-                    {
-                        InsertIntoArray(nums1, i, nums2[j]);
-                        InsertIntoArray(nums1, i + 1, nums1[i]);
-                    }
-                    else
-                    {
-                        InsertIntoArray(nums1, i, nums1[i]);
-                        InsertIntoArray(nums1, i + 1, nums2[j]);
-                    }
-                    j++;
-                }
-
-                for (int i = 0; i < m; i++)
-                {
-                    nums1[n + i] = nums2[i];
-                }
-            }
-        }
-
+      
         public static void DuplicateZeroesInPlace(int[] array)
         {
             var jump = false;
@@ -169,14 +114,10 @@
                 array[index] = value;
             }
         }
+
         public static void InsertIntoArray(int[] array, int index, int value)
         {
             var newArray = array;
-
-            //for (int j = 0; j < index; j++)
-            //{
-            //    array[j] = newArray[j];
-            //}
 
             for (int i = newArray.Length - 1; i >= index; i--)
             {
@@ -194,5 +135,47 @@
                 array[index] = value;
             }
         }
+
+        /*
+        Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the 
+        elements may be changed. Then return the number of elements in nums which are not equal to val.
+        Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following 
+        things:
+
+        Change the array nums such that the first k elements of nums contain the elements which are not equal to val. 
+        The remaining elements of nums are not important as well as the size of nums. 
+        
+        Return k.
+
+        Input: nums = [3,2,2,3], val = 3
+        Output: 2, nums = [2,2,_,_]
+        Explanation: Your function should return k = 2, with the first two elements of nums being 2.
+        It does not matter what you leave beyond the returned k (hence they are underscores).
+
+        */
+
+        public static int RemoveElement(int[] nums, int value)
+        {
+            int length = nums.Length;
+            int numberOfValueFound = 0;
+
+            for(int i = 0; i < length; i++)
+            {
+                if (nums[i] == value)
+                {
+                    // Move every element 1 step left to overwrite the value at i
+                    for(int j = i; j < length - 1; j++)
+                    {
+                        nums[j] = nums[j + 1];
+                    }
+
+                    numberOfValueFound++;
+                }
+            }
+                
+            return nums.Length - numberOfValueFound;
+        }
+
+
     }
 }
